@@ -1,14 +1,15 @@
-# Clean Anime Image
+# Clean-Anime-Image
 
-> A flavored CLI tool to restore noisy anime images.
+> A Simple and Efficient Anime Image Restoration Tool
 
 ## Get Started
 
 ```shell
-./install.sh
-source .venv/bin/activate
-./run.sh
-./run.sh input.png output.png
+git clone https://github.com/AsherJingkongChen/clean-anime-image.git && \
+cd clean-anime-image && \
+./install.sh && \
+source .venv/bin/activate && \
+./clean-anime-image.py -h
 ```
 
 ## License
