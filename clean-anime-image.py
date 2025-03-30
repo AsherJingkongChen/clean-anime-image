@@ -98,7 +98,7 @@ def parse_arguments():
 
     if args.tile == 0:
         args.tile_padding = 0
-        args.border_padding, = 0
+        args.border_padding = 0
 
     return args
 
@@ -114,7 +114,9 @@ def fetch_model_path(arg_model: str, url: str):
             file_name=f"{arg_model}.pth",
         )
     except Exception as e:
-        raise OSError(f"Failed to download model {arg_model} from {url}: {e}") from e
+        raise OSError(
+            f"{e}\nFailed to download model '{arg_model}' from '{url}'"
+        ) from e
 
 
 def select_device(arg_device):
@@ -196,7 +198,6 @@ def setup_upscaler(args):
         tile=args.tile,
         tile_pad=args.tile_padding,
     )
-    model.name = args.model
     return model
 
 
@@ -226,7 +227,7 @@ def process_image(
     import cv2
 
     try:
-        logging.info(f"Running ImageMagick")
+        logging.info("Running ImageMagick")
         subprocess.check_call(
             [
                 "magick",
@@ -242,11 +243,11 @@ def process_image(
         if input_img is None:
             raise RuntimeError(f"Failed reading '{output_file}'")
 
-        logging.info(f"Running Real-ESRGAN ({upscaler.name}, x{scale:.2f})")
+        logging.info("Running Real-ESRGAN")
         output_img = upscaler.enhance(input_img, outscale=scale)[0]
         cv2.imwrite(str(output_file), output_img, [cv2.IMWRITE_PNG_COMPRESSION, 0])
 
-        logging.info(f"Running pngquant")
+        logging.info("Running pngquant")
         subprocess.check_call(
             "pngquant --force --skip-if-larger --strip --speed 1 --ext .png".split()
             + [str(output_file)],
@@ -254,14 +255,14 @@ def process_image(
 
     except subprocess.CalledProcessError as e:
         raise RuntimeError(
-            f"Failed processing '{input_file.name}' on calling '{' '.join(e.cmd)}'"
+            f"{e}\nFailed processing '{input_file.name}' on calling '{' '.join(e.cmd)}'"
         ) from e
     except Exception as e:
         if "out of memory" in str(e):
             logging.error(
                 "Try reducing tile size (--tile) or using CPU (--device cpu)."
             )
-        raise RuntimeError(f"Failed processing '{input_file.name}'") from e
+        raise RuntimeError(f"{e}\nFailed processing '{input_file.name}'") from e
 
 
 def main():
@@ -304,7 +305,7 @@ def main():
     except KeyboardInterrupt:
         logging.warning("Interrupting")
     except Exception as e:
-        logging.error(str(e))
+        logging.error(e)
         exit_code = 1
 
     return exit_code
