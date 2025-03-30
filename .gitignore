@@ -1,0 +1,9 @@
+.DS_Store
+
+/.venv/
+/inputs/
+/outputs/
+/models/
+
+*.swp
+__pycache__/

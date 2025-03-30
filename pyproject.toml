@@ -1,0 +1,11 @@
+[project]
+name = "clean-anime-image"
+dynamic = ["version"]
+requires-python = ">=3.12"
+dependencies = [
+    "basicsr",
+    "realesrgan>=0.3.0",
+]
+
+[tool.uv.sources]
+basicsr = { git = "https://github.com/XPixelGroup/BasicSR.git" }
