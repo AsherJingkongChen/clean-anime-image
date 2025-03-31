@@ -5,3 +5,4 @@ magick -version || (echo "Install magick: https://imagemagick.org/script/downloa
 pngquant -V || cargo binstall -y pngquant
 uv -V || cargo binstall -y uv --git https://github.com/astral-sh/uv
 uv pip install --system .
+rm -rf build/ clean_anime_image.egg-info/

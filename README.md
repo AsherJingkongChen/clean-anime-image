@@ -13,11 +13,11 @@ cd clean-anime-image && \
 ## Usage
 
 ```shell
-clean-anime-image -h
+clean_anime_image -h
 ```
 
 ```shell
-clean-anime-image -i inputs/ -o outputs/ -s 2.0
+clean_anime_image -i inputs/ -o outputs/ -s 2.0
 ```
 
 ## License

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import argparse, contextlib, logging, subprocess, sys
+import argparse, logging, subprocess, sys
 from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
