@@ -1,9 +1,12 @@
 .DS_Store
 
 /.venv/
+/build/
+/dist/
 /inputs/
 /outputs/
 /models/
 
+*.egg-info/
 *.swp
 __pycache__/

@@ -93,7 +93,7 @@ wheels = [
 
 [[package]]
 name = "clean-anime-image"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "basicsr" },
     { name = "realesrgan" },

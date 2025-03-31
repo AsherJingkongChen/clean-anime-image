@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
-import argparse
-import logging
-import subprocess
-import sys
+import argparse, contextlib, logging, subprocess, sys
 from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -218,6 +215,19 @@ def find_input_image_files(arg_input: str):
     raise ValueError(f"No valid directory or image file found (--input '{arg_input}')")
 
 
+class SilentStdout:
+    def __enter__(self):
+        import os
+
+        self.old_stdout = sys.stdout
+        sys.stdout = open(os.devnull, "w")
+        return self
+
+    def __exit__(self, *_):
+        sys.stdout.close()
+        sys.stdout = self.old_stdout
+
+
 def process_image(
     input_file: Path,
     output_file: Path,
@@ -244,7 +254,8 @@ def process_image(
             raise RuntimeError(f"Failed reading '{output_file}'")
 
         logging.info("Running Real-ESRGAN")
-        output_img = upscaler.enhance(input_img, outscale=scale)[0]
+        with SilentStdout():
+            output_img = upscaler.enhance(input_img, outscale=scale)[0]
         cv2.imwrite(str(output_file), output_img, [cv2.IMWRITE_PNG_COMPRESSION, 0])
 
         logging.info("Running pngquant")

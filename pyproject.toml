@@ -1,11 +1,21 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools"]
+
 [project]
-name = "clean-anime-image"
-dynamic = ["version"]
-requires-python = ">=3.12"
 dependencies = [
-    "basicsr",
-    "realesrgan>=0.3.0",
+  "basicsr",
+  "realesrgan>=0.3.0",
 ]
+dynamic = ["version"]
+name = "clean-anime-image"
+requires-python = ">=3.12"
+
+[project.scripts]
+clean-anime-image = "clean_anime_image:main"
+
+[tool.setuptools]
+py-modules = ["clean_anime_image"]
 
 [tool.uv.sources]
-basicsr = { git = "https://github.com/XPixelGroup/BasicSR.git" }
+basicsr = {git = "https://github.com/XPixelGroup/BasicSR.git"}
